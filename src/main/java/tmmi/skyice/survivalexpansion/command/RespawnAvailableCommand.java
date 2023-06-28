@@ -24,7 +24,7 @@ public class RespawnAvailableCommand {
             }
         }).then(argument("player", EntityArgumentType.player()).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).executes(context -> {
             ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-            LogUtil.info("ServerPlayerEntity player：{}", player);
+            LogUtil.debug("ServerPlayerEntity player：{}", player);
             getRespawnAvailable(player);
             return 0;
         }));
