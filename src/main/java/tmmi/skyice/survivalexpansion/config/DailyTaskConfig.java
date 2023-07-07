@@ -20,7 +20,8 @@ public class DailyTaskConfig extends AutoLoadTomlConfig {
     private List<String> itemBlacklist = Arrays.asList(
             "BEDROCK",
             "ELYTRA",
-            "*_SPAWN_EGG"
+            "*_SPAWN_EGG",
+            "MUSIC_DISC_*"
     );
 
 

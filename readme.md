@@ -82,5 +82,7 @@ hard-mode = true
 
 ```/survivalexpansion respawnTime <player>```       ---Check respawn time recovery for <player>
 
+```/survivalexpansion dailyTasks```       ---Open your daily tasks Gui
+
 ## Issues And Requests
 If you find any bugs or glitches, be sure to make a bug report under issues and I will do my best to fix it! Just as well if you have a cool idea for something that I should add, let me know and I will consider adding it!

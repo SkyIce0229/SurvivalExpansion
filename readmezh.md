@@ -86,6 +86,8 @@ hard-mode = true
 
 ```/survivalexpansion respawnTime <player>```      ---查看<player>下一次恢复体力的时间
 
+```/survivalexpansion dailyTasks```       ---打开每日任务界面
+
 ## 问题和请求
 
 如果你发现任何错误或小故障，一定要在问题下做一个错误报告，我会尽力解决它！同样，如果你对我应该添加的内容有一个很酷的想法，请告诉我，我会考虑添加它！

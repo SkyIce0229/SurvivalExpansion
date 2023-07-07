@@ -1,6 +1,6 @@
 {
   "text.survival_expansion.dead_disconnect": "可用重生次数已耗尽\n重生次数将在 %s 恢复",
-  "text.survival_expansion.help_command": "\n§6*********************************************** \n§6|                                              §6| \n§6|          §fSurvivalExpansion 帮助菜单:         §6| \n§6|                                              §6| \n§6*********************************************** \n§e/survivalexpansion§7 §fhelp§7 --- 打开帮助菜单 \n§e/survivalexpansion §frespawnAvailable§7 ---查看§a<玩家>§7剩余复活次数 \n§e/survivalexpansion §frespawnTime   ---查看§a<玩家>§7复活次数恢复时间 \n************************************* \n§f感谢你的支持，如有问题请联系我 \nQQ群：826499801找群主 \n§6***********************************************\n",
+  "text.survival_expansion.help_command": "\n§6*********************************************** \n§6|                                              §6| \n§6|          §fSurvivalExpansion 帮助菜单:         §6| \n§6|                                              §6| \n§6*********************************************** \n§e/survivalexpansion§7 §fhelp§7 --- 打开帮助菜单 \n§e/survivalexpansion §frespawnAvailable§7 ---查看§a<玩家>§7剩余复活次数 \n§e/survivalexpansion §frespawnTime   §7---查看§a<玩家>§7复活次数恢复时间 \n§e/survivalexpansion §fdailyTasks   §7---打开每日任务界面 \n************************************* \n§f感谢你的支持，如有问题请联系我 \nQQ群：826499801找群主 \n§6***********************************************\n",
   "text.survival_expansion.dead_time": "§3下一次恢复 复活次数 的时间是： §f§l%s",
   "text.survival_expansion.respawn_available": "§3你有 §f§l%s §3次重生次数",
   "text.survival_expansion.only_player_error": "§l§c这个指令只能玩家使用！",
