@@ -1,6 +1,5 @@
 package tmmi.skyice.survivalexpansion.db.util;
 
-import tmmi.skyice.survivalexpansion.SurvivalExpansionMod;
 import tmmi.skyice.survivalexpansion.util.LogUtil;
 
 import java.sql.Connection;
@@ -42,9 +41,7 @@ public class DBConnectionPool {
             }
         }
         StringBuilder sb = new StringBuilder();
-        connections.forEach(connection -> {
-            sb.append(System.identityHashCode(connection)).append(", ");
-        });
+        connections.forEach(connection -> sb.append(System.identityHashCode(connection)).append(", "));
         LogUtil.debug("connectionPoll：[{}]",sb.toString());
         Connection connection = connections.pollFirst();
         if (!isValid(connection)) {
@@ -55,9 +52,7 @@ public class DBConnectionPool {
     public synchronized void releaseConnection(Connection connection) {
         connections.addLast(connection);
         StringBuilder sb = new StringBuilder();
-        connections.forEach(conn -> {
-            sb.append(System.identityHashCode(conn)).append(", ");
-        });
+        connections.forEach(conn -> sb.append(System.identityHashCode(conn)).append(", "));
         LogUtil.debug("connectionPoll：[{}]",sb.toString());
         //唤醒等待的线程
         notifyAll();

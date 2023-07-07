@@ -1,7 +1,6 @@
 package tmmi.skyice.survivalexpansion.db;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import tmmi.skyice.survivalexpansion.db.table.typehandler.TypeHandle;

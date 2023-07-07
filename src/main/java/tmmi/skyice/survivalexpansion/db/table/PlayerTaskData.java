@@ -1,11 +1,9 @@
 package tmmi.skyice.survivalexpansion.db.table;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import tmmi.skyice.survivalexpansion.db.annotation.TableName;
 
+import tmmi.skyice.survivalexpansion.db.annotation.TableName;
 import java.time.LocalDate;
-import java.util.stream.IntStream;
+
 @TableName("survivalexpansion_player_task_data")
 public class PlayerTaskData extends ActiveRecordModel<PlayerTaskData> {
     private Long id;
