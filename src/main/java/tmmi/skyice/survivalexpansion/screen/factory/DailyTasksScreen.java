@@ -190,7 +190,7 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
                     player.getInventory().removeStack(i, needCount);
                     inventory.removeStack(slotIndex, needCount);
                     playerTasks.get(slotIndex - middleStartIndex).setRequireCount(clickItemStackCount - needCount);
-//                    player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.6f, 0.8f);
+                    player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.6f, 1.0f);
                 }
                 if (playerTasks.get(slotIndex - middleStartIndex).getRequireCount() == 0) {
                     inventory.setStack(slotIndex, SUCCESS_GLASS_PANE);
