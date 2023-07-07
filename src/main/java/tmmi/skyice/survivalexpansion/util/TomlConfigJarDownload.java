@@ -9,20 +9,24 @@ import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 
 public class TomlConfigJarDownload {
+    public static final String resourcePath= "mods/toml-config-1.0.2.jar";
+    public static final String modPath = "mods/fabric-toml-config-1.0.2.jar";
+    public static final String tempModPath = "mods/fabric-toml-config-1.0.2.temp";
+
     public static void Download() {
-        if (new File("mods/fabric-toml-config-1.0.jar").exists()) {
+        if (new File(modPath).exists()) {
             return;
         }
         LogUtil.info("-------------------------------------------------");
-        LogUtil.info("|  Downloading toml-config-1.0.jar............. |");
+        LogUtil.info("|  Downloading toml-config-1.0.2.jar............. |");
         LogUtil.info("-------------------------------------------------");
-        String resultUrl = "https://github.com/Fndream/toml-config/releases/download/v1.0/toml-config-1.0.jar";
+        String resultUrl = "https://github.com/Fndream/toml-config/releases/download/v1.0.2/toml-config-1.0.2.jar";
         try {
             URL url = new URL(resultUrl);
             URLConnection urlConnection = url.openConnection();
 
             BufferedInputStream input = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream("mods/toml-config-1.0.jar"));
+            BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(resourcePath));
             try (input; writer) {
                 byte[] bytes = input.readAllBytes();
                 writer.write(bytes);
@@ -32,18 +36,18 @@ public class TomlConfigJarDownload {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        LogUtil.warn("Download toml-config-1.0.jar successfully! Please restart the server!");
+        LogUtil.warn("Download toml-config-1.0.2.jar successfully! Please restart the server!");
         System.exit(0);
     }
 
     private static void addFabricModJson() throws IOException {
-        File file = new File("mods/toml-config-1.0.jar");
+        File file = new File(resourcePath);
         if (!file.exists()) {
             return;
         }
 
         JarFile jarFile = new JarFile(file);
-        File tempJarFile = new File("mods/toml-config-1.0.temp");
+        File tempJarFile = new File(tempModPath);
         try (jarFile) {
             JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(tempJarFile));
             try (jarOut) {
@@ -72,7 +76,7 @@ public class TomlConfigJarDownload {
             }
         }
         file.delete();
-        tempJarFile.renameTo(new File("mods/fabric-toml-config-1.0.jar"));
+        tempJarFile.renameTo(new File(modPath));
     }
 
 }

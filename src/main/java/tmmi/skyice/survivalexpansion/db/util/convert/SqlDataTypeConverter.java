@@ -1,5 +1,5 @@
 package tmmi.skyice.survivalexpansion.db.util.convert;
 
-public interface DateTypeConvertor<T>  {
+public interface SqlDataTypeConverter<T>  {
     T convert(Object obj);
 }

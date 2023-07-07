@@ -25,7 +25,7 @@ dependencies {
     //Mysql
     include(modImplementation "mysql:mysql-connector-java:8.0.28")
     //config
-    modImplementation files('libs/fabric-toml-config-1.0.jar')
+    modImplementation files('libs/toml-config-1.0.2.jar')
     include(modImplementation "org.tomlj:tomlj:1.1.0")
     include(modImplementation "org.antlr:antlr4-runtime:4.11.0")
     include(modImplementation "org.checkerframework:checker-qual:3.21.2")

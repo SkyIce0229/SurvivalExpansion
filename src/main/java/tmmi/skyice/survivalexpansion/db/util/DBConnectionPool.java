@@ -1,4 +1,4 @@
-package tmmi.skyice.survivalexpansion.db;
+package tmmi.skyice.survivalexpansion.db.util;
 
 import tmmi.skyice.survivalexpansion.SurvivalExpansionMod;
 import tmmi.skyice.survivalexpansion.util.LogUtil;
@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+import static tmmi.skyice.survivalexpansion.SurvivalExpansionMod.survivalExpansionToml;
 
 public class DBConnectionPool {
     //数据库连接池
@@ -66,9 +68,9 @@ public class DBConnectionPool {
         }
     }
     private Connection createConnection() throws SQLException {
-        String databaseName = SurvivalExpansionMod.databaseConfig.getDatabaseName();
-        String url = "jdbc:mysql://"+SurvivalExpansionMod.databaseConfig.getIp()+":"+SurvivalExpansionMod.databaseConfig.getPort()+"/";
-        return DriverManager.getConnection(url+databaseName,SurvivalExpansionMod.databaseConfig.getUsername(),SurvivalExpansionMod.databaseConfig.getPassword());
+        String databaseName = survivalExpansionToml.getDatabase().getDatabaseName();
+        String url = "jdbc:mysql://"+survivalExpansionToml.getDatabase().getIp()+":"+survivalExpansionToml.getDatabase().getPort()+"/";
+        return DriverManager.getConnection(url+databaseName,survivalExpansionToml.getDatabase().getUsername(),survivalExpansionToml.getDatabase().getPassword());
 
     }
     private boolean isValid(Connection connection) throws SQLException {

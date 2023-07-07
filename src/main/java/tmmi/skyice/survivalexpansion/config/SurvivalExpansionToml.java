@@ -6,8 +6,8 @@ import org.tomlj.TomlTable;
 
 public class SurvivalExpansionToml extends AutoLoadTomlConfig {
     private DatabaseConfig database = new DatabaseConfig();
-    private GeneralConfig generalConfig = new GeneralConfig();
-    private SettingConfig settingConfig = new SettingConfig();
+    private HardModeConfig hardModeConfig = new HardModeConfig();
+    private DailyTaskConfig dailyTaskConfig = new DailyTaskConfig();
 
     public SurvivalExpansionToml(){
         super(null);
@@ -21,23 +21,26 @@ public class SurvivalExpansionToml extends AutoLoadTomlConfig {
         return database;
     }
 
-    public void setDatabase(DatabaseConfig database) {
+    public SurvivalExpansionToml setDatabase(DatabaseConfig database) {
         this.database = database;
+        return this;
     }
 
-    public GeneralConfig getGeneralConfig() {
-        return generalConfig;
+    public HardModeConfig getHardModeConfig() {
+        return hardModeConfig;
     }
 
-    public void setGeneralConfig(GeneralConfig generalConfig) {
-        this.generalConfig = generalConfig;
+    public SurvivalExpansionToml setHardModeConfig(HardModeConfig hardModeConfig) {
+        this.hardModeConfig = hardModeConfig;
+        return this;
     }
 
-    public SettingConfig getSettingConfig() {
-        return settingConfig;
+    public DailyTaskConfig getDailyTaskConfig() {
+        return dailyTaskConfig;
     }
 
-    public void setSettingConfig(SettingConfig settingConfig) {
-        this.settingConfig = settingConfig;
+    public SurvivalExpansionToml setDailyTaskConfig(DailyTaskConfig dailyTaskConfig) {
+        this.dailyTaskConfig = dailyTaskConfig;
+        return this;
     }
 }
