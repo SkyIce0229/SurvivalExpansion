@@ -18,8 +18,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import tmmi.skyice.survivalexpansion.SurvivalExpansionMod;
+import tmmi.skyice.survivalexpansion.db.service.PlayerDataService;
 import tmmi.skyice.survivalexpansion.db.service.PlayerTaskManifestDataService;
 import tmmi.skyice.survivalexpansion.db.table.ActiveRecordModel;
+import tmmi.skyice.survivalexpansion.db.table.PlayerData;
 import tmmi.skyice.survivalexpansion.db.table.PlayerTaskManifestData;
 import tmmi.skyice.survivalexpansion.db.util.DB;
 import tmmi.skyice.survivalexpansion.screen.InteractionScreenHandler;
@@ -42,14 +44,17 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
     // 是否是新数据，如果为true，close时进行insert，否则进行update
     private boolean isNewTask;
 
+    //是否完成任务
+    private boolean isCompleted = true;
+
     static {
         SUCCESS_GLASS_PANE = new ItemStack(Items.LIME_STAINED_GLASS_PANE, 1);
-        SUCCESS_GLASS_PANE.setCustomName(Text.literal(Text.translatable("text.survival_expansion.item.finish_glass_pane" ).getString()));
+        SUCCESS_GLASS_PANE.setCustomName(Text.literal(Text.translatable("text.survival_expansion.item.finish_glass_pane").getString()));
     }
 
     @Override
     public Text getDisplayName() {
-        return Text.literal(Text.translatable("text.survival_expansion.screen.daily_task.title" ).getString());
+        return Text.literal(Text.translatable("text.survival_expansion.screen.daily_task.title").getString());
     }
 
     @Nullable
@@ -67,10 +72,30 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
                 super.onClosed(player);
                 // insertOrUpdate 一般是不会用到了因为id和name冲突你更新不需要更新name插入又需要name那么逻辑肯定要if,既然都if了，就不需要insertOrUpdate
                 if (!playerTasks.isEmpty()) {
-                    if (isNewTask) {
-                        DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::insert));
+                    for (PlayerTaskManifestData playerTask : playerTasks) {
+                        //判断任务是否完成，如果完成，跳出循环，如果没完成，继续循环
+                        if (playerTask.getRequireCount() > 0) {
+                            isCompleted = false;
+                            break;
+                        }
+                    }
+                    //判断是否完成任务，如果没完成任务，执行保存数据操作。如果完成了，奖励玩家1次复活
+                    if (isCompleted) {
+                        player.sendMessage(Text.literal("任务完成!"));
+                        //任务完成，奖励玩家1次复活
+                        PlayerData playerData = PlayerDataService.getByName(player.getName().getString());
+                        //获取玩家复活上限
+                        int respawnAvailableLimit = SurvivalExpansionMod.survivalExpansionToml.getHardModeConfig().getRespawnAvailableLimit();
+                        //获取玩家当前复活次数
+                        int respawnAvailable = playerData.getRespawnAvailable();
+                        //判断玩家复活次数是否达到上限，如果达到上限，不奖励，否则奖励
+                        playerData.setRespawnAvailable(Math.min(respawnAvailableLimit, respawnAvailable + 1));
                     } else {
-                        DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::updateById));
+                        if (isNewTask) {
+                            DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::insert));
+                        } else {
+                            DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::updateById));
+                        }
                     }
                 }
             }
@@ -103,7 +128,7 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
                 if (i < playerTasks.size()) {
                     if (playerTasks.get(i).getRequireCount() > 0) {
                         inventory.setStack(i + middleStartIndex, new ItemStack(playerTasks.get(i).getRequireItem(), playerTasks.get(i).getRequireCount()));
-                    }else {
+                    } else {
                         inventory.setStack(i + middleStartIndex, SUCCESS_GLASS_PANE);
                     }
                 } else {
@@ -134,7 +159,7 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
             }
 
             String itemId = id.toString();
-            boolean isBlacklisted = blacklist.stream().anyMatch(pattern -> itemId.endsWith(pattern.replace("*", "" )));
+            boolean isBlacklisted = blacklist.stream().anyMatch(pattern -> itemId.endsWith(pattern.replace("*", "")));
             if (isBlacklisted) {
                 continue;
             }
@@ -203,7 +228,7 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
         }
         if (itemShortage) {
             // 物品不足提示逻辑，例如发送消息给玩家
-            player.sendMessage(Text.literal("物品不足" ));
+            player.sendMessage(Text.literal("物品不足"));
         }
     }
 }
