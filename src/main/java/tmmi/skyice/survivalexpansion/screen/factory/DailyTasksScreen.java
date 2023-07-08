@@ -19,9 +19,11 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import tmmi.skyice.survivalexpansion.SurvivalExpansionMod;
 import tmmi.skyice.survivalexpansion.db.service.PlayerDataService;
+import tmmi.skyice.survivalexpansion.db.service.PlayerTaskDataService;
 import tmmi.skyice.survivalexpansion.db.service.PlayerTaskManifestDataService;
 import tmmi.skyice.survivalexpansion.db.table.ActiveRecordModel;
 import tmmi.skyice.survivalexpansion.db.table.PlayerData;
+import tmmi.skyice.survivalexpansion.db.table.PlayerTaskData;
 import tmmi.skyice.survivalexpansion.db.table.PlayerTaskManifestData;
 import tmmi.skyice.survivalexpansion.db.util.DB;
 import tmmi.skyice.survivalexpansion.screen.InteractionScreenHandler;
@@ -90,13 +92,16 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
                         int respawnAvailable = playerData.getRespawnAvailable();
                         //判断玩家复活次数是否达到上限，如果达到上限，不奖励，否则奖励
                         playerData.copy().setRespawnAvailable(Math.min(respawnAvailableLimit, respawnAvailable + 1)).updateById();
-                    } else {
-                        if (isNewTask) {
-                            DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::insert));
-                        } else {
-                            DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::updateById));
-                        }
+                        //完成任务次数+1
+                        PlayerTaskData playerSuccessTaskData = PlayerTaskDataService.getByNameOrDefault(player.getName().getString());
+                        playerSuccessTaskData.copy().setUsername(player.getName().getString()).setSuccessCount(playerSuccessTaskData.getSuccessCount() + 1).insertOrUpdate();
                     }
+                    if (isNewTask) {
+                        DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::insert));
+                    } else {
+                        DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::updateById));
+                    }
+
                 }
             }
         };

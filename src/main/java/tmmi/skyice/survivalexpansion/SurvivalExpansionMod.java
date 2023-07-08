@@ -96,7 +96,7 @@ public class SurvivalExpansionMod implements DedicatedServerModInitializer {
         Statement dbstmt = null;
         //尝试建表
         String[] createTable = {"CREATE TABLE IF NOT EXISTS `survivalexpansion_player_data` (`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',`username` varchar(36) NOT NULL,`respawn_available` int NOT NULL DEFAULT '3',`last_respawn_settlement_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), UNIQUE KEY `uk_name` (`username`) USING BTREE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3",
-                "CREATE TABLE IF NOT EXISTS `survivalexpansion_player_task_data` (`id` bigint NOT NULL AUTO_INCREMENT,`username` varchar(36) NOT NULL,`task_data` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '{}',`refresh_date` date NOT NULL DEFAULT '1000-01-01',`success_count` int NOT NULL DEFAULT '0',PRIMARY KEY (`id`),UNIQUE KEY `uk_name` (`username`) USING BTREE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3",
+                "CREATE TABLE IF NOT EXISTS `survivalexpansion_player_task_data` (`id` bigint NOT NULL AUTO_INCREMENT,`username` varchar(36) NOT NULL,`success_count` int NOT NULL DEFAULT '0',PRIMARY KEY (`id`),UNIQUE KEY `uk_name` (`username`) USING BTREE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3",
                 "CREATE TABLE IF NOT EXISTS `survivalexpansion_player_task_manifest_data` (`id` bigint NOT NULL AUTO_INCREMENT,`username` varchar(36) NOT NULL,`require_item` varchar(128) NOT NULL DEFAULT 'AIR',`require_count` int NOT NULL DEFAULT '0',`date` date NOT NULL DEFAULT (curdate()),PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;"};
 
         try {
