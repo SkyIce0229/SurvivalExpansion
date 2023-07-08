@@ -81,7 +81,7 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
                     }
                     //判断是否完成任务，如果没完成任务，执行保存数据操作。如果完成了，奖励玩家1次复活
                     if (isCompleted) {
-                        player.sendMessage(Text.literal("任务完成!"));
+                        player.sendMessage(Text.literal(Text.translatable("text.survival_expansion.message.completed_all_daily_tasks").getString()));
                         //任务完成，奖励玩家1次复活
                         PlayerData playerData = PlayerDataService.getByNameOrDefault(player.getName().getString());
                         //获取玩家复活上限

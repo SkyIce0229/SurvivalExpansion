@@ -5,6 +5,7 @@
   "text.survival_expansion.respawn_available": "§3你有 §f§l%s §3次重生次数",
   "text.survival_expansion.only_player_error": "§l§c这个指令只能玩家使用！",
   "text.survival_expansion.screen.daily_task.title": "§b§c每日任务",
-  "text.survival_expansion.item.finish_glass_pane": "§b§a已完成!"
+  "text.survival_expansion.item.finish_glass_pane": "§b§a已完成!",
+  "text.survival_expansion.message.completed_all_daily_tasks": "§6今日任务已全部完成！"
 
 }
