@@ -44,9 +44,6 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
     // 是否是新数据，如果为true，close时进行insert，否则进行update
     private boolean isNewTask;
 
-    //是否完成任务
-    private boolean isCompleted = true;
-
     static {
         SUCCESS_GLASS_PANE = new ItemStack(Items.LIME_STAINED_GLASS_PANE, 1);
         SUCCESS_GLASS_PANE.setCustomName(Text.literal(Text.translatable("text.survival_expansion.item.finish_glass_pane").getString()));
@@ -71,6 +68,9 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
             public void onClosed(PlayerEntity player) {
                 super.onClosed(player);
                 // insertOrUpdate 一般是不会用到了因为id和name冲突你更新不需要更新name插入又需要name那么逻辑肯定要if,既然都if了，就不需要insertOrUpdate
+
+                //是否完成任务
+                boolean isCompleted = true;
                 if (!playerTasks.isEmpty()) {
                     for (PlayerTaskManifestData playerTask : playerTasks) {
                         //判断任务是否完成，如果完成，跳出循环，如果没完成，继续循环
@@ -83,13 +83,13 @@ public class DailyTasksScreen implements NamedScreenHandlerFactory {
                     if (isCompleted) {
                         player.sendMessage(Text.literal("任务完成!"));
                         //任务完成，奖励玩家1次复活
-                        PlayerData playerData = PlayerDataService.getByName(player.getName().getString());
+                        PlayerData playerData = PlayerDataService.getByNameOrDefault(player.getName().getString());
                         //获取玩家复活上限
                         int respawnAvailableLimit = SurvivalExpansionMod.survivalExpansionToml.getHardModeConfig().getRespawnAvailableLimit();
                         //获取玩家当前复活次数
                         int respawnAvailable = playerData.getRespawnAvailable();
                         //判断玩家复活次数是否达到上限，如果达到上限，不奖励，否则奖励
-                        playerData.setRespawnAvailable(Math.min(respawnAvailableLimit, respawnAvailable + 1));
+                        playerData.copy().setRespawnAvailable(Math.min(respawnAvailableLimit, respawnAvailable + 1)).updateById();
                     } else {
                         if (isNewTask) {
                             DB.executeTransaction(() -> playerTasks.forEach(ActiveRecordModel::insert));
