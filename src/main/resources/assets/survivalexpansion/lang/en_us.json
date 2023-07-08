@@ -5,6 +5,7 @@
   "text.survival_expansion.respawn_available": "§3You have §f§l%s §3respawn available.",
   "text.survival_expansion.only_player_error": "§l§cThis command can only be used by players.",
   "text.survival_expansion.screen.daily_task.title": "§b§cDailyTask",
-  "text.survival_expansion.item.finish_glass_pane": "§b§aCompleted!"
+  "text.survival_expansion.item.finish_glass_pane": "§b§aCompleted!",
+  "text.survival_expansion.message.completed_all_daily_tasks": "All daily tasks Completed!"
 
 }
