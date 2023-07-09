@@ -12,6 +12,7 @@ import tmmi.skyice.survivalexpansion.db.service.PlayerDataService;
 import tmmi.skyice.survivalexpansion.db.table.PlayerData;
 import tmmi.skyice.survivalexpansion.event.PlayerEvent;
 import tmmi.skyice.survivalexpansion.config.HardModeConfig;
+import tmmi.skyice.survivalexpansion.util.LogUtil;
 
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
@@ -37,8 +38,10 @@ public class HardModeHandle {
         String playerName = handler.player.getName().getString();
         //极限模式
         PlayerData playerData = PlayerDataService.getByNameOrDefault(playerName);
+        LogUtil.debug("username:{}",playerData.getUsername());
+        LogUtil.debug("time:{}",playerData.getLastRespawnSettlementTime());
         int respawnAvailable = playerData.getRespawnAvailable();
-        if (respawnAvailable > 0) {
+        if (respawnAvailable >= 0) {
             if (handler.player.interactionManager.getGameMode().equals(GameMode.SPECTATOR)) {
                 handler.player.changeGameMode(GameMode.SURVIVAL);
             }
@@ -59,11 +62,12 @@ public class HardModeHandle {
         //获取玩家的data
         //除非没创建角色数据，不然不需要getByName直接orDefault
         PlayerData data = PlayerDataService.getByNameOrDefault(playerName);
+
         int respawnAvailable = data.getRespawnAvailable();
-        if (respawnAvailable > 0) {
-            //如果可用复活次数大于0，就减少一次
+        if (respawnAvailable >= 0) {
+            //如果可用复活次数大于等于0，就减少一次
             //这里要用copy，因为才copy后RespawnAvailable是空的，不能直接相加
-            data.copy().setUserName(playerName).setRespawnAvailable(data.getRespawnAvailable() - 1).setLastRespawnSettlementTime(data.getLastRespawnSettlementTime()).insertOrUpdate();
+            data.copy().setUsername(playerName).setRespawnAvailable(data.getRespawnAvailable() - 1).setLastRespawnSettlementTime(data.getLastRespawnSettlementTime()).insertOrUpdate();
         } else {
             long nextRespawnTime = data.getLastRespawnSettlementTime().getTime() + hardModeConfig.getRespawnAvailableCoolDown();
             String showTime = new Timestamp(nextRespawnTime).toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));

@@ -28,6 +28,9 @@ public class SqlDataTypeConverters {
             if (value instanceof Date date) {
                 return Timestamp.valueOf(date.toLocalDate().atStartOfDay());
             }
+            if (value instanceof LocalDateTime data) {
+                return Timestamp.valueOf(data);
+            }
             return null;
         }
     }

@@ -40,12 +40,12 @@ public class PlayerData extends ActiveRecordModel<PlayerData> {
         return this;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public PlayerData setUserName(String name) {
-        this.username = name;
+    public PlayerData setUsername(String username) {
+        this.username = username;
         return this;
     }
 
