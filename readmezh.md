@@ -72,6 +72,11 @@ hard-mode = true
 # 复活可用次数。 默认 3 次。
 -respawn-available-limit = 3
 
+# The item blacklist of the daily task, after filling in the item id, the item will not appear when the daily task is refreshed. Default: "BEDROCK","ELYTRA".
+# 每日任务物品黑名单，往里面填入物品id后，生成的每日任务需求将不会出现以下物品。默认值："BEDROCK","ELYTRA"。
+item-blacklist = ["BEDROCK", "ELYTRA", "*_SPAWN_EGG", "MUSIC_DISC_*"]
+
+
 
 ```
 
